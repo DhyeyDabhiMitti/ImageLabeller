@@ -91,7 +91,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 with st.form(key='my_form'):
         input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
-        print('Taking input')
+        st.write(st.label)
         submit_button = st.form_submit_button("Submit",on_click=update_index)
 
 
