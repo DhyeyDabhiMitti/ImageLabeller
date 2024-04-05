@@ -96,11 +96,15 @@ with st.form(key='my_form'):
         if submit_button:
                 try:
                     label = int(st.session_state.label)
+                    st.write(label)
                     df.loc[st.session_state['counter'],st.session_state['current_user']] = label
+                    st.write(label)
                     df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
+                    st.write(label)
                     st.session_state[st.session_state['current_user']+'_counter']+=1
                     st.write(st.session_state[st.session_state['current_user']+'_counter'])
                     st.session_state['data']=df
+                    st.write(label)
                 except:
                     st.write('Enter an integer value!!!')
 
