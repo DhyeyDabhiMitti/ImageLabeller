@@ -93,9 +93,5 @@ with st.form(key='my_form'):
         input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
         print('Taking input')
         submit_button = st.form_submit_button("Submit",on_click=update_index)
-        print(submit_button)
-        if submit_button:
-            update_index()
-            st.rerun()
 
 
