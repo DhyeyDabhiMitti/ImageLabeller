@@ -94,7 +94,7 @@ with st.form(key='my_form'):
         st.write(st.session_state.label)
         submit_button = st.form_submit_button("Submit")
         if submit_button:
-                try:
+                    #try:
                     label = int(st.session_state.label)
                     st.write(label)
                     df.loc[st.session_state['counter'],st.session_state['current_user']] = label
@@ -105,7 +105,7 @@ with st.form(key='my_form'):
                     st.write(st.session_state[st.session_state['current_user']+'_counter'])
                     st.session_state['data']=df
                     st.write(label)
-                except:
-                    st.write('Enter an integer value!!!')
+                    #except:
+                    #st.write('Enter an integer value!!!')
 
 
