@@ -13,6 +13,7 @@ def update_index():
         df.loc[st.session_state['counter'],st.session_state['current_user']] = label
         df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
         st.session_state[st.session_state['current_user']+'_counter']+=1
+        st.write(st.session_state[st.session_state['current_user']+'_counter'])
         st.session_state['data']=df
     except:
         st.write('Enter an integer value!!!')
@@ -66,7 +67,6 @@ date = str(df.loc[index,'executedOn'])
 print(index)
 print('Local variables initiated!')
 
-st.write(st.session_state)
 if df.loc[index,'FieldPhot1hldr']!='None':
     print('Starting Image 1 processing!')
     key = 'CropIn_Photos/'+str(df.loc[index,'FieldPhot1hldr'])
