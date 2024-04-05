@@ -19,7 +19,6 @@ def update_index():
 
 
 st.title('Image Labelling Dashboard!')
-st.write(st.session_state)
 
 ## Initiate s3 session ##
 if 's3' not in st.session_state:
@@ -67,7 +66,7 @@ date = str(df.loc[index,'executedOn'])
 print(index)
 print('Local variables initiated!')
 
-
+st.write(st.session_state)
 if df.loc[index,'FieldPhot1hldr']!='None':
     print('Starting Image 1 processing!')
     key = 'CropIn_Photos/'+str(df.loc[index,'FieldPhot1hldr'])
