@@ -19,7 +19,7 @@ def update_index():
 
 
 st.title('Image Labelling Dashboard!')
-
+st.write(st.session_state)
 
 ## Initiate s3 session ##
 if 's3' not in st.session_state:
