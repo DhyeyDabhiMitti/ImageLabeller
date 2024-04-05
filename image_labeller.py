@@ -43,6 +43,8 @@ users = st.session_state['users']
 
 if 'data' not in st.session_state:
     st.session_state['data'] = pd.read_csv('./data/Field_Inspection_Field_Photos.csv')
+    for temp_user in users:
+        st.session_state['data'][temp_user]=None
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
@@ -89,7 +91,6 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 with st.form(key='my_form'):
         input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
-        st.write(st.session_state.label)
         submit_button = st.form_submit_button("Submit")
         if submit_button:
                 try:
