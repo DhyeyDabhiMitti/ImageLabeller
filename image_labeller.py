@@ -97,7 +97,7 @@ with st.form(key='my_form'):
                     #try:
                     label = int(st.session_state.label)
                     st.write(label)
-                    df.loc[st.session_state['counter'],st.session_state['current_user']] = label
+                    df.loc[st.session_state[st.session_state['current_user']+'_counter'],st.session_state['current_user']] = label
                     st.write(label)
                     df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
                     st.write(label)
