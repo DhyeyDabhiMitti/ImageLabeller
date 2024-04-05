@@ -92,6 +92,16 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 with st.form(key='my_form'):
         input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
         st.write(st.session_state.label)
-        submit_button = st.form_submit_button("Submit",on_click=update_index)
+        submit_button = st.form_submit_button("Submit")
+        if submit_button:
+                try:
+                    label = int(st.session_state.label)
+                    df.loc[st.session_state['counter'],st.session_state['current_user']] = label
+                    df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
+                    st.session_state[st.session_state['current_user']+'_counter']+=1
+                    st.write(st.session_state[st.session_state['current_user']+'_counter'])
+                    st.session_state['data']=df
+                except:
+                    st.write('Enter an integer value!!!')
 
 
