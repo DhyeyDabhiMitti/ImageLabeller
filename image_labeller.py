@@ -23,10 +23,10 @@ st.title('Image Labelling Dashboard!')
 
 ## Initiate s3 session ##
 if 's3' not in st.session_state:
-    id = os.environ['aws_access_key_id']
-    access_key = os.environ['aws_secret_access_key']
-    region_name = os.environ['region_name']
-    st.session_state['bucket_name'] = os.environ['bucket_name']
+    id = st.secrets['aws_access_key_id']
+    access_key = st.secrets['aws_secret_access_key']
+    region_name = st.secrets['region_name']
+    st.session_state['bucket_name'] = st.secrets['bucket_name']
     s3 = boto3.client('s3', aws_access_key_id=id,
                   aws_secret_access_key=access_key,
                   region_name=region_name)
