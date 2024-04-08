@@ -95,6 +95,7 @@ if fail_counter==2:
     df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
     st.session_state[st.session_state['current_user']+'_counter']+=1
     st.session_state['data']=df
+    st.rerun()
     
 with st.form(key='my_form'):
         input_text = st.selectbox("Is Field Inundated?",['inundated','non-inundated','not sure'])
