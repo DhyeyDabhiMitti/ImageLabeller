@@ -95,7 +95,9 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 if fail_counter==2:
     df.loc[st.session_state[st.session_state['current_user']+'_counter'],st.session_state['current_user']] = -1
-    df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
+    status = save_df(df)
+    if status==200:
+        st.write("Successful!!")
     st.session_state[st.session_state['current_user']+'_counter']+=1
     st.session_state['data']=df
     st.rerun()
@@ -114,7 +116,9 @@ with st.form(key='my_form'):
                 try:
                     label = int(st.session_state.label)
                     df.loc[st.session_state[st.session_state['current_user']+'_counter'],st.session_state['current_user']] = label
-                    df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
+                    status = save_df(df)
+                    if status==200:
+                        st.write("Successful!!")
                     st.session_state[st.session_state['current_user']+'_counter']+=1
                     st.session_state['data']=df
                 except:
