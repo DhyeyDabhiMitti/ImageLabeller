@@ -97,7 +97,14 @@ if fail_counter==2:
     st.session_state['data']=df
     
 with st.form(key='my_form'):
-        input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
+        input_text = st.selectbox("Is Field Inundated?",['inundated','non-inundated','not sure'])
+        if input_text == 'inundated':
+            label = 1
+        if input_text == 'non-inundated':
+            label = 0
+        if input_text == 'not sure':
+            label = 0.5
+        st.session_state.label=label
         submit_button = st.form_submit_button("Submit")
         if submit_button:
                 try:
