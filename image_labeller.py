@@ -65,8 +65,10 @@ date = str(df.loc[index,'executedOn'])
 print(index)
 print('Local variables initiated!')
 
+st.write("Images are for the field: ",df.loc[index,'croppableAreaId'])
 if df.loc[index,'FieldPhot1hldr']!='None':
     print('Starting Image 1 processing!')
+    fail_counter = 0
     key = 'CropIn_Photos/'+str(df.loc[index,'FieldPhot1hldr'])
     try:
         response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
@@ -74,6 +76,7 @@ if df.loc[index,'FieldPhot1hldr']!='None':
         image = Image.open(io.BytesIO(image_content))
         st.image(image)
     except:
+        fail_counter+=1
         pass
 if df.loc[index,'FieldPhot2hldr']!='None':
     print('Starting Image 2 processing!')
@@ -84,9 +87,15 @@ if df.loc[index,'FieldPhot2hldr']!='None':
         image = Image.open(io.BytesIO(image_content))
         st.image(image)
     except:
+        fail_counter+=1
         pass
 
-
+if fail_counter==2:
+    df.loc[st.session_state[st.session_state['current_user']+'_counter'],st.session_state['current_user']] = -1
+    df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
+    st.session_state[st.session_state['current_user']+'_counter']+=1
+    st.session_state['data']=df
+    
 with st.form(key='my_form'):
         input_text = st.text_input("Is Field Inundated?",key='label',value="0:not-inundated & 1:inundated")
         submit_button = st.form_submit_button("Submit")
