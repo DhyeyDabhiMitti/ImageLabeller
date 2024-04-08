@@ -38,7 +38,7 @@ print('S3 session initiated!')
 
 ## Initiate users ##
 if 'users' not in st.session_state:
-    st.session_state['users'] = ('Dhyey','Akshay','Raja','Shivang','Nate')
+    st.session_state['users'] = ('Dhyey','Akshay','Raja','Shivang','Nate','Arun','Preethi')
 users = st.session_state['users']
 
 ## Initiate the df ##
