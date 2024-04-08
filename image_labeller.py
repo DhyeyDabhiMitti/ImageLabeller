@@ -11,11 +11,9 @@ import io
 def save_df(input_df):
     with io.StringIO() as csv_buffer:
         input_df.to_csv(csv_buffer, index=False)
-
         response = st.session_state.s3.put_object(
             Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv", Body=csv_buffer.getvalue()
         )
-
         status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")\
     
     return status
@@ -45,7 +43,8 @@ users = st.session_state['users']
 
 ## Initiate the df ##
 if 'data' not in st.session_state:
-    st.session_state['data'] = pd.read_csv('./data/Field_Inspection_Field_Photos.csv')
+    response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv")
+    st.session_state['data'] = pd.read_csv(response.get("Body"))
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
