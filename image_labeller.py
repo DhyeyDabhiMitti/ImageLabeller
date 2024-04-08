@@ -6,17 +6,20 @@ import io
 from PIL import Image
 import boto3
 import os
+import io
 
-def update_index():
-    try:
-        label = int(st.session_state.label)
-        df.loc[st.session_state['counter'],st.session_state['current_user']] = label
-        df.to_csv('./data/Field_Inspection_Field_Photos.csv',index=False)
-        st.session_state[st.session_state['current_user']+'_counter']+=1
-        st.write(st.session_state[st.session_state['current_user']+'_counter'])
-        st.session_state['data']=df
-    except:
-        st.write('Enter an integer value!!!')
+def save_df(input_df):
+    with io.StringIO() as csv_buffer:
+        input_df.to_csv(csv_buffer, index=False)
+
+        response = st.session_state.s3.put_object(
+            Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv", Body=csv_buffer.getvalue()
+        )
+
+        status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")\
+    
+    return status
+
 
 
 st.title('Image Labelling Dashboard!')
@@ -38,17 +41,16 @@ print('S3 session initiated!')
 ## Initiate users ##
 if 'users' not in st.session_state:
     st.session_state['users'] = ('Dhyey','Akshay','Raja','Shivang','Nate')
-
 users = st.session_state['users']
 
+## Initiate the df ##
 if 'data' not in st.session_state:
     st.session_state['data'] = pd.read_csv('./data/Field_Inspection_Field_Photos.csv')
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
 
-print('Data added to the session state!')
-
+## get the user and initiate the counter name as well as the counter ##
 user = st.selectbox('Who is annotating?',users)
 st.session_state['current_user'] = user
 counter_name = st.session_state['current_user']+'_counter'
@@ -56,14 +58,15 @@ counter_name = st.session_state['current_user']+'_counter'
 if counter_name not in st.session_state:
     st.session_state[counter_name] = df[user].count()
 
-print('Counter initiated!')
+## initiate the index and check the stopping condition ##
 index = st.session_state[counter_name]
+if index>df.shape[0]:
+    st.write("You have annotated all the images!")
+    st.stop()
 st.write('Currently Processed ',index,' Images!!')
 
 field = str(df.loc[index,'croppableAreaId'])
 date = str(df.loc[index,'executedOn'])
-print(index)
-print('Local variables initiated!')
 
 st.write("Images are for the field: ",df.loc[index,'croppableAreaId'])
 if df.loc[index,'FieldPhot1hldr']!='None':
