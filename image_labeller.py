@@ -13,7 +13,7 @@ def save_df(input_df):
     with io.StringIO() as csv_buffer:
         input_df.to_csv(csv_buffer, index=False)
         response = st.session_state.s3.put_object(
-            Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv", Body=csv_buffer.getvalue()
+            Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test.csv", Body=csv_buffer.getvalue()
         )
         status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")\
     
@@ -48,7 +48,7 @@ if 's3' not in st.session_state:
 
 ## Initiate the df ##
 if 'data' not in st.session_state:
-    response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv")
+    response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test.csv")
     st.session_state['data'] = pd.read_csv(response.get("Body"))
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
@@ -78,7 +78,7 @@ if counter_name not in st.session_state:
 
 ## initiate the index and check the stopping condition ##
 index = st.session_state[counter_name]
-if index>df.shape[0]:
+if index>=df.shape[0]:
     st.write("You have annotated all the images!")
     st.stop()
 st.write('Currently Processed ',index,' Images!!')
