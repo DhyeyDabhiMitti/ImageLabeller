@@ -117,7 +117,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 if df.loc[index,'Soilmoist5hldr']!=None:
     for image in df.loc[index,'Soilmoist5hldr']:
             #try:
-            print(image)
+            st.write(image)
             try_counter+=1
             key = 'CropIn_Photos/'+image['originalFileName']
             response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
