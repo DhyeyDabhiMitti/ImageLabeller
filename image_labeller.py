@@ -89,18 +89,20 @@ st.write("Water Height: ",df.loc[index,'WaterHeig0'])
 if df.loc[index,'FieldPhot1hldr']!='None':
     print('Starting Image 1 processing!')
     fail_counter = 0
+    try_counter = 0
     key = 'CropIn_Photos/'+str(df.loc[index,'FieldPhot1hldr'])
     try:
+        try_counter+=1
         response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
         image_content = response['Body'].read()
         image = Image.open(io.BytesIO(image_content))
         st.image(image)
     except:
         fail_counter+=1
-        pass
 if df.loc[index,'FieldPhot2hldr']!='None':
     print('Starting Image 2 processing!')
     try:
+        try_counter+=1
         key = 'CropIn_Photos/'+df.loc[index,'FieldPhot2hldr']
         response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
         image_content = response['Body'].read()
@@ -108,9 +110,20 @@ if df.loc[index,'FieldPhot2hldr']!='None':
         st.image(image)
     except:
         fail_counter+=1
-        pass
 
-if fail_counter==2:
+if df.loc[index,'Soilmoist5hldr']!=None:
+    for image in df.loc[index,'Soilmoist5hldr']:
+        try:
+            try_counter+=1
+            key = 'CropIn_Photos/'+image['originalFileName']
+            response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
+            image_content = response['Body'].read()
+            image = Image.open(io.BytesIO(image_content))
+            st.image(image)
+        except:
+            fail_counter+=1
+
+if fail_counter==try_counter:
     df.loc[st.session_state[st.session_state['current_user']+'_counter'],st.session_state['current_user']] = -1
     status = save_df(df)
     if status==200:
