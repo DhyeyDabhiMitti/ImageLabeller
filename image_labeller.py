@@ -56,7 +56,7 @@ df = st.session_state['data']
 
 ## Initiate users ##
 if 'users' not in st.session_state:
-    st.session_state['users'] = df.columns[16:]
+    st.session_state['users'] = df.columns[17:]
 users = st.session_state['users']
 
 ## get the user and initiate the counter name as well as the counter ##
@@ -115,7 +115,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 
 
-if df.loc[index,'Soilmoist5hldr']!=None:
+if pd.isna(df.loc[index,'Soilmoist5hldr']):
     lst = safe_literal_eval(df.loc[index,'Soilmoist5hldr'])
     for image in lst:
         try:
