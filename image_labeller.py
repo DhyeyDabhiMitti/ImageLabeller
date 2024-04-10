@@ -7,7 +7,11 @@ from PIL import Image
 import boto3
 import os
 import io
+<<<<<<< HEAD
+from ast import literally_eval
+=======
 from ast import literal_eval
+>>>>>>> f316cafc7a97a16e784a0e60f54cd393cb72a8a3
 
 def save_df(input_df):
     with io.StringIO() as csv_buffer:
@@ -54,7 +58,11 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
+<<<<<<< HEAD
+df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(lambda x:literally_eval(x) if x is not None else None)
+=======
 df['Soilmoist5hldr']=df['Soilmoist5hldr'].apply(literal_eval)
+>>>>>>> f316cafc7a97a16e784a0e60f54cd393cb72a8a3
 print(df.columns)
 
 ## get the user and initiate the counter name as well as the counter ##
