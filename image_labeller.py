@@ -116,7 +116,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 
 if df.loc[index,'Soilmoist5hldr']!=None:
-    st.write(df.loc[index,'Soilmoist5hldr'])
+    st.write(type(df.loc[index,'Soilmoist5hldr']))
     lst = safe_literal_eval(df.loc[index,'Soilmoist5hldr'])
     st.write(lst)
     for image in lst:
