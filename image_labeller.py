@@ -45,8 +45,6 @@ if 's3' not in st.session_state:
                   region_name=region_name)
     st.session_state['s3'] = s3
 
-print('S3 session initiated!')
-
 
 ## Initiate users ##
 if 'users' not in st.session_state:
@@ -61,7 +59,6 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
 df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(safe_literal_eval)
-print(df.columns)
 
 ## get the user and initiate the counter name as well as the counter ##
 user = st.selectbox('Who is annotating?',users)
@@ -95,7 +92,6 @@ st.write("Field Inspection Details: ")
 st.write("Plant Height: ",df.loc[index,'PlantHeig3'])
 st.write("Water Height: ",df.loc[index,'WaterHeig0'])
 if df.loc[index,'FieldPhot1hldr']!='None':
-    print('Starting Image 1 processing!')
     fail_counter = 0
     try_counter = 0
     key = 'CropIn_Photos/'+str(df.loc[index,'FieldPhot1hldr'])
@@ -108,7 +104,6 @@ if df.loc[index,'FieldPhot1hldr']!='None':
     except:
         fail_counter+=1
 if df.loc[index,'FieldPhot2hldr']!='None':
-    print('Starting Image 2 processing!')
     try:
         try_counter+=1
         key = 'CropIn_Photos/'+df.loc[index,'FieldPhot2hldr']
