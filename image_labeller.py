@@ -25,6 +25,12 @@ def add_user(user_name):
     st.session_state.users.append(user_name)
     return None
 
+def safe_literal_eval(input_str):
+    try:
+        return literal_eval(input_str)
+    except:
+        return None
+
 
 st.title('Image Labelling Dashboard!')
 
@@ -54,7 +60,7 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
-df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(lambda x:literal_eval(x) if ~pd.isna(x) else None)
+df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(safe_literal_eval)
 print(df.columns)
 
 ## get the user and initiate the counter name as well as the counter ##
