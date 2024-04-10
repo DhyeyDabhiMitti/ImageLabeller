@@ -115,7 +115,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
         fail_counter+=1
 
 
-st.write(ddf.loc[index,'Soilmoist5hldr'])
+st.write(df.loc[index,'Soilmoist5hldr'])
 if df.loc[index,'Soilmoist5hldr']!=None:
     for image in df.loc[index,'Soilmoist5hldr']:
             #try:
