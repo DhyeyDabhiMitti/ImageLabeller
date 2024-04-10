@@ -59,7 +59,7 @@ user = st.selectbox('Who is annotating?',users)
 st.session_state['current_user'] = user
 new_user = st.checkbox('Add User')
 if new_user:
-    with st.form():
+    with st.form(key='new_user_form'):
         user_name = st.text_input('Enter your name:')
         submit_button = st.form_submit_button("Submit")
         if submit_button:
