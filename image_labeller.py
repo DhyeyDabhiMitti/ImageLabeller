@@ -115,8 +115,9 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 
 
-if ~pd.isna(df.loc[index,'Soilmoist5hldr']):
+if df.loc[index,'Soilmoist5hldr']!=None:
     lst = safe_literal_eval(df.loc[index,'Soilmoist5hldr'])
+    st.write(lst)
     for image in lst:
         try:
             try_counter+=1
