@@ -123,7 +123,7 @@ if df.loc[index,'Soilmoist5hldr']!=None:
     for image in df.loc[index,'Soilmoist5hldr']:
             #try:
             try_counter+=1
-            key = 'CropIn_Photos/'+image[1:-1].split()
+            key = 'CropIn_Photos/'+image['originalFileName']
             response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
             image_content = response['Body'].read()
             image = Image.open(io.BytesIO(image_content))
