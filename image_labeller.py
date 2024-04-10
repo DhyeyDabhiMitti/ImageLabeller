@@ -52,6 +52,7 @@ if 'data' not in st.session_state:
     st.session_state['data'] = pd.read_csv(response.get("Body"))
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
+print(df.columns)
 df = st.session_state['data']
 
 ## get the user and initiate the counter name as well as the counter ##
