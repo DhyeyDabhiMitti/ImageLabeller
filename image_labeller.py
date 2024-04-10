@@ -18,6 +18,11 @@ def save_df(input_df):
     
     return status
 
+def add_user(user_name):
+    st.session_state.data.user_name = None
+    save_df(st.session_state.data)
+    st.session_state.users.append(user_name)
+    return None
 
 
 st.title('Image Labelling Dashboard!')
@@ -38,7 +43,7 @@ print('S3 session initiated!')
 
 ## Initiate users ##
 if 'users' not in st.session_state:
-    st.session_state['users'] = ('Dhyey','Akshay','Raja','Shivang','Nate','Arun','Preethi')
+    st.session_state['users'] = ['Dhyey','Akshay','Raja','Shivang','Nate','Arun','Preethi']
 users = st.session_state['users']
 
 ## Initiate the df ##
@@ -52,6 +57,15 @@ df = st.session_state['data']
 ## get the user and initiate the counter name as well as the counter ##
 user = st.selectbox('Who is annotating?',users)
 st.session_state['current_user'] = user
+new_user = st.checkbox('Add User')
+if new_user:
+    with st.form():
+        user_name = st.text_input('Enter your name:')
+        submit_button = st.form_submit_button("Submit")
+        if submit_button:
+            add_user(user_name)
+            st.rerun()
+
 counter_name = st.session_state['current_user']+'_counter'
 
 if counter_name not in st.session_state:
