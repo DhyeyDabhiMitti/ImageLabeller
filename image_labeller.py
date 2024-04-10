@@ -53,7 +53,6 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
-df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(safe_literal_eval)
 
 ## Initiate users ##
 if 'users' not in st.session_state:
@@ -115,9 +114,10 @@ if df.loc[index,'FieldPhot2hldr']!='None':
         fail_counter+=1
 
 
-st.write(df.loc[index,'Soilmoist5hldr'])
+
 if df.loc[index,'Soilmoist5hldr']!=None:
-    for image in df.loc[index,'Soilmoist5hldr']:
+    lst = safe_literal_eval(df.loc[index,'Soilmoist5hldr'])
+    for image in lst:
             #try:
             try_counter+=1
             key = 'CropIn_Photos/'+image['originalFileName']
