@@ -83,6 +83,9 @@ field = str(df.loc[index,'croppableAreaId'])
 date = str(df.loc[index,'executedOn'])
 
 st.write("Images are for the field: ",df.loc[index,'croppableAreaId'])
+st.write("Field Inspection Details: ")
+st.write("Plant Height: ",df.loc[index,'PlantHeig3'])
+st.write("Water Height: ",df.loc[index,'WaterHeig0'])
 if df.loc[index,'FieldPhot1hldr']!='None':
     print('Starting Image 1 processing!')
     fail_counter = 0
