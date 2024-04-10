@@ -7,6 +7,7 @@ from PIL import Image
 import boto3
 import os
 import io
+from ast import literal_eval
 
 def save_df(input_df):
     with io.StringIO() as csv_buffer:
@@ -53,6 +54,7 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
+df['Soilmoist5hldr']=df['Soilmoist5hldr'].apply(literal_eval)
 print(df.columns)
 
 ## get the user and initiate the counter name as well as the counter ##
@@ -115,7 +117,7 @@ if df.loc[index,'Soilmoist5hldr']!=None:
     for image in df.loc[index,'Soilmoist5hldr']:
             #try:
             try_counter+=1
-            key = 'CropIn_Photos/'+image['originalFileName']
+            key = 'CropIn_Photos/'+image[1:-1].split()
             response = st.session_state['s3'].get_object(Bucket=st.session_state['bucket_name'], Key=key)
             image_content = response['Body'].read()
             image = Image.open(io.BytesIO(image_content))
