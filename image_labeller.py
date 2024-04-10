@@ -19,7 +19,7 @@ def save_df(input_df):
     return status
 
 def add_user(user_name):
-    st.session_state.data.user_name = None
+    st.session_state.data[user_name] = None
     save_df(st.session_state.data)
     st.session_state.users.append(user_name)
     return None
