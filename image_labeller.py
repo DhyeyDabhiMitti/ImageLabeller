@@ -54,7 +54,7 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
-df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(lambda x:literal_eval(x) if x is not None else None)
+df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(lambda x:literal_eval(x) if ~pd.isna(x) else None)
 print(df.columns)
 
 ## get the user and initiate the counter name as well as the counter ##
