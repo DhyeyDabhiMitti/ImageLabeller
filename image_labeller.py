@@ -46,11 +46,6 @@ if 's3' not in st.session_state:
     st.session_state['s3'] = s3
 
 
-## Initiate users ##
-if 'users' not in st.session_state:
-    st.session_state['users'] = ['Dhyey','Akshay','Raja','Shivang','Nate','Arun','Preethi']
-users = st.session_state['users']
-
 ## Initiate the df ##
 if 'data' not in st.session_state:
     response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated.csv")
@@ -59,6 +54,11 @@ if 'data' not in st.session_state:
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
 df = st.session_state['data']
 df['Soilmoist5hldr'] = df['Soilmoist5hldr'].apply(safe_literal_eval)
+
+## Initiate users ##
+if 'users' not in st.session_state:
+    st.session_state['users'] = df.columns[16:]
+users = st.session_state['users']
 
 ## get the user and initiate the counter name as well as the counter ##
 user = st.selectbox('Who is annotating?',users)
