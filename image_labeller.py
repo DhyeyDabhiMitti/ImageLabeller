@@ -115,7 +115,7 @@ if df.loc[index,'FieldPhot2hldr']!='None':
 
 
 
-if !pd.isna(df.loc[index,'Soilmoist5hldr']):
+if not pd.isna(df.loc[index,'Soilmoist5hldr']):
     st.write(type(df.loc[index,'Soilmoist5hldr']))
     lst = safe_literal_eval(df.loc[index,'Soilmoist5hldr'])
     st.write(lst)
