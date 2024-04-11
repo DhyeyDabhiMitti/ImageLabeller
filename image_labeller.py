@@ -56,7 +56,7 @@ df = st.session_state['data']
 
 ## Initiate users ##
 if 'users' not in st.session_state:
-    st.session_state['users'] = df.columns[17:]
+    st.session_state['users'] = list(df.columns[17:])
 users = st.session_state['users']
 
 ## get the user and initiate the counter name as well as the counter ##
