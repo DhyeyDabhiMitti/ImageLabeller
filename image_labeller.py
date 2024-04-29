@@ -13,7 +13,7 @@ def save_df(input_df):
     with io.StringIO() as csv_buffer:
         input_df.to_csv(csv_buffer, index=False)
         response = st.session_state.s3.put_object(
-            Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test.csv", Body=csv_buffer.getvalue()
+            Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test_All.csv", Body=csv_buffer.getvalue()
         )
         status = response.get("ResponseMetadata", {}).get("HTTPStatusCode")\
     
