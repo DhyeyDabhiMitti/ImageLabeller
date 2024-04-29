@@ -48,7 +48,7 @@ if 's3' not in st.session_state:
 
 ## Initiate the df ##
 if 'data' not in st.session_state:
-    response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test.csv")
+    response = st.session_state.s3.get_object(Bucket=st.session_state.bucket_name, Key="Mitti-Data/Field_Inspection_Annotated_Test_All.csv")
     st.session_state['data'] = pd.read_csv(response.get("Body"))
     st.session_state['data']['FieldPhot1hldr'].fillna('None')
     st.session_state['data']['FieldPhot2hldr'].fillna('None')
